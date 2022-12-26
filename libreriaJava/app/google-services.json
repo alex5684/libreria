@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "488127209163",
+    "firebase_url": "https://libre-af975-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "libre-af975",
+    "storage_bucket": "libre-af975.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488127209163:android:41fbbaf24c2d598eb3054e",
+        "android_client_info": {
+          "package_name": "com.manghia.libreriajava"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488127209163-0eso635mlrsf5dvhqe1uh8ltmknc6qbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIocBLdzN3oIBTKEaUyzHZnurRxvoe7V8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488127209163-0eso635mlrsf5dvhqe1uh8ltmknc6qbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
