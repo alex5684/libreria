@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>93094364829-0vqt5ugi9pr1dodcefrdpvf3vpda0t4k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.93094364829-0vqt5ugi9pr1dodcefrdpvf3vpda0t4k</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA0OZmBCWQRkXhpPAqdeLcfHNyHH8N3KXQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>93094364829</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.libreriaFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>libreriaflutter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>libreriaflutter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:93094364829:ios:668b91c7303179bec03674</string>
+	<key>DATABASE_URL</key>
+	<string>https://libreriaflutter-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

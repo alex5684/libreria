@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "93094364829",
+    "firebase_url": "https://libreriaflutter-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "libreriaflutter",
+    "storage_bucket": "libreriaflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93094364829:android:b8196974245c5980c03674",
+        "android_client_info": {
+          "package_name": "com.example.libreria_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93094364829-s0lo7g6qnqjbuc9qo7d3aef5fej0onvc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEQ_dO6RCyw31tVLLtEJOK-Q5neejShT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93094364829-s0lo7g6qnqjbuc9qo7d3aef5fej0onvc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93094364829-l7dmgg9179n710m35soafoq8pe6mj4uk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.manghia.antoniolim.libreriaFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
