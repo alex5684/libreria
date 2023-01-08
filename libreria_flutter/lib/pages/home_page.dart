@@ -1,34 +1,44 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
-  final user = FirebaseAuth.instance.currentUser!;
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
-  // sign user out method
+class _HomePageState extends State<HomePage> {
+  final user = FirebaseAuth.instance.currentUser!;
+  Map<dynamic, dynamic>? map;
+  var list = [];
+
+  void readData() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.get();
+    map = snapshot.value as Map<dynamic, dynamic>?;
+    map?.forEach((key, value) { list.add(key);});
+    print("passato");
+  }
+
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
 
   @override
   Widget build(BuildContext context) {
+    readData();
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        actions: [
-          IconButton(
-            onPressed: signUserOut,
-            icon: Icon(Icons.logout),
-          )
-        ],
-      ),
-      body: Center(
-          child: Text(
-        "LOGGED IN AS: " + user.uid!,
-        style: TextStyle(fontSize: 20),
-      )),
+
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(0)),
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(1)),
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(2)),
+          ],
+        ),
     );
+
   }
 }

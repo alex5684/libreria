@@ -178,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onTap: () => AuthService().signInWithGoogle(),
                     ),
 
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
 
                     // apple button
                     SquareTile(
