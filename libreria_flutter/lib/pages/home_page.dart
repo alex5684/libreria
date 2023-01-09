@@ -17,28 +17,58 @@ class _HomePageState extends State<HomePage> {
   void readData() async {
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.get();
-    map = snapshot.value as Map<dynamic, dynamic>?;
-    map?.forEach((key, value) { list.add(key);});
-    print("passato");
+    setState(() {
+      map = Map<String, dynamic>.from(snapshot.value as Map);
+      map?.forEach((key, value) {
+        list.add(key);
+      });
+    });
   }
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
 
+  List<BottomNavigationBarItem> _getBotNavBarItems() {
+    List<BottomNavigationBarItem> itemsNav = [];
+
+    for (String testo in list) {
+      itemsNav.add(
+        BottomNavigationBarItem(icon: Text(testo),label: ""),
+      );
+    }
+
+    return itemsNav;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    readData();
-    return Scaffold(
-
+    try {
+      return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(0)),
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(1)),
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: list.elementAt(2)),
-          ],
+          onTap: (index) {
+            print(index);
+          },
+          items: _getBotNavBarItems(),
         ),
+      );
+    }
+    catch(error)
+  {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          print(index);
+        },
+        items: _getBotNavBarItems(),
+      ),
     );
-
+  }
   }
 }
