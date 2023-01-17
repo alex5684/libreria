@@ -5,6 +5,8 @@ import 'package:libreria_flutter/components/my_textfield.dart';
 import 'package:libreria_flutter/components/square_tile.dart';
 import 'package:libreria_flutter/services/auth_service.dart';
 
+import 'home_page.dart';
+
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
 
@@ -37,11 +39,17 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
-      // pop the loading circle
       Navigator.pop(context);
+      // pop the loading circle
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (contex) =>  HomePage(),
+        ),
+      );
+      //
     } on FirebaseAuthException catch (e) {
-      // pop the loading circle
       Navigator.pop(context);
+      // pop the loading circle
       // show error message
       showErrorMessage(e.code);
     }
