@@ -9,17 +9,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool loaded=false;
   final FirebaseDatabase _database = FirebaseDatabase.instance;
+  Map<dynamic,dynamic> _databaseMap={};
+  List<String> _databaseKeys=[];
+
+  @override
+  void initState() {
+    _database.ref().onValue.listen((DatabaseEvent event) {
+      _databaseMap=(event.snapshot.value as List?)!.asMap();
+      _databaseKeys=_databaseMap!.keys.cast<String>()!.toList();
+      loaded=true;
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _database.ref().once().then((DatabaseEvent databaseEvent) {
-      Object? map = databaseEvent.snapshot.value;
-      List<dynamic>? _data=databaseEvent.snapshot.value as List?;
-      List<BottomNavigationBarItem> items=[];
-      _data?.forEach((element) { items.add(BottomNavigationBarItem(icon: Text(element),label: ""),);});
-      return Scaffold(bottomNavigationBar: BottomNavigationBar(items: items,),);
-    });
-    return Scaffold();
+    if(loaded==false)
+      {
+        initState();
+        return Scaffold(body: Text("non loaded"),);
+      }
+    else
+      {
+        return Scaffold(body: Text(_databaseKeys.elementAt(1)),);
+      }
+    /*return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(items: [BottomNavigationBarItem(icon: Text(_databaseKeys.elementAt(1)),label: ""),BottomNavigationBarItem(icon: Text("parola"),label: ""),],),
+    );*/
   }
 }
