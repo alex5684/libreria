@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "51533247567",
+    "firebase_url": "https://flutter-login-demo-b037c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flutter-login-demo-b037c",
+    "storage_bucket": "flutter-login-demo-b037c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51533247567:android:57906faf095b1f3caaa63a",
+        "android_client_info": {
+          "package_name": "com.ingifranco.flutter_crud_rtdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51533247567-c3v6slivcc6drfnftpkdb54n0626gbel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhCtcdaMRvoDKpHpVgrE3V2kQD2L4JanE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51533247567-c3v6slivcc6drfnftpkdb54n0626gbel.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "51533247567-kj966cqmkb9jercta09j65f86mj1vlje.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ingifranco.flutCrudRtdb"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
