@@ -1,5 +1,8 @@
+library my_prj.globals;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:libreria_flutter/services/book_model.dart';
 
-var listaLibri=<dynamic>[];
-var filteredList=<int>[];
+
+var libri=<Book>[];
+var proprietarioList=<dynamic>[];
 late User user;

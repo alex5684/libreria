@@ -15,8 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     globals.user = FirebaseAuth.instance.currentUser!;
-    setFilteredList("proprietario","pippo");
-    globals.filteredList.forEach((element) {print(element.toString());});
+    setProprietarioList("pippo");
     return Scaffold(
       body: Text("pippo"),
     );

@@ -14,6 +14,7 @@ class BookData{
   late String classe;
   late String materia;
   late String titolo;
+  late String proprietario;
   late String condizioni;
   late double prezzo;
   late bool disponibile;
@@ -26,6 +27,7 @@ class BookData{
     required this.classe,
     required this.materia,
     required this.titolo,
+    required this.proprietario,
     required this.condizioni,
     required this.prezzo,
     required this.disponibile
@@ -39,6 +41,7 @@ class BookData{
     classe = json["classe"];
     materia = json["materia"];
     titolo = json["titolo"];
+    proprietario=json["proprietario"];
     condizioni = json["condizioni"];
     prezzo = json["prezzo"].toDouble();
     disponibile = json["disponibile"];
@@ -52,6 +55,7 @@ class BookData{
     "classe" : classe,
     "materia" : materia,
     "titolo" : titolo,
+    "propietario":proprietario,
     "condizioni" : condizioni,
     "prezzo" : prezzo,
     "disponibile" : disponibile

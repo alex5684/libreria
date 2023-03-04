@@ -1,25 +1,32 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:libreria_flutter/globalVariables.dart' as globals;
+import 'book_model.dart';
 
-  setFilteredList(String valueToSearchFor,var value) async
+  setProprietarioList(String value) async
   {
-    setListaLibri();
-    globals.listaLibri.asMap().forEach((key, value) {
-      if(value!=null)
-      {
-        if(value[valueToSearchFor]==value)
+    await setListaLibri();
+
+    globals.libri.forEach((element) {
+      if(element!=null)
         {
-          globals.filteredList.add(key);
+          if(element.bookData.proprietario==value)
+            {
+              globals.proprietarioList.add(element.key);
+            }
         }
-      }
     });
   }
 
   setListaLibri() async
   {
+    Map<dynamic,dynamic> listaLibri=Map();
     await FirebaseDatabase.instance.ref().child("libri").get().then((snapshot) {
       if (snapshot.exists) {
-        globals.listaLibri = snapshot.value as List<dynamic>;
+        listaLibri = snapshot.value as Map<dynamic,dynamic>;
+        listaLibri.forEach((key, value) {
+          BookData bookData = BookData.fromJson(value as Map);
+          globals.libri.add(Book(key: key, bookData: bookData));
+        });
       }
     });
   }
