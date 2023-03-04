@@ -17,7 +17,36 @@ class _HomePageState extends State<HomePage> {
     globals.user = FirebaseAuth.instance.currentUser!;
     setProprietarioList("pippo");
     return Scaffold(
-      body: Text("pippo"),
+      body: LayoutBuilder(builder: (BuildContext contex, BoxConstraints size) {
+        if(size.maxWidth<500)
+          {
+            return Column(
+                children: [
+                  Text("Home page"),
+
+                  GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    children: List.generate(globals.libri.length, (index) {
+                      return Center(
+                        child:Container(
+                          height: 40,
+                          width: 40,
+                          child: Text("pippo"),
+                          color: Colors.amber,
+                        ),
+                      );
+                    }),
+                  )
+                ],
+            );
+          }
+        else
+          {
+            return Text("pc");
+          }
+      },),
     );
   }
 }
