@@ -4,6 +4,7 @@ import 'package:libreria_flutter/components/my_button.dart';
 import 'package:libreria_flutter/components/my_textfield.dart';
 import 'package:libreria_flutter/components/square_tile.dart';
 import 'package:libreria_flutter/services/auth_service.dart';
+import 'package:libreria_flutter/services/database_utility.dart';
 
 import 'home_page.dart';
 
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       Navigator.pop(context);
+      await setListaLibri();
       // pop the loading circle
       await Navigator.of(context).push(
         MaterialPageRoute(

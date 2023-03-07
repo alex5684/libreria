@@ -6,47 +6,59 @@ import 'package:libreria_flutter/services/database_utility.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    //getData();
+    super.initState();
+  }
+
+  getData() async
+  {
+    await setListaLibri();
+  }
+
+  @override
   Widget build(BuildContext context) {
     globals.user = FirebaseAuth.instance.currentUser!;
     setProprietarioList("pippo");
     return Scaffold(
-      body: LayoutBuilder(builder: (BuildContext contex, BoxConstraints size) {
-        if(size.maxWidth<500)
-          {
-            return Column(
-                children: [
-                  Text("Home page"),
+      backgroundColor: globals.coloreSfondoScaffold,
+      body: LayoutBuilder(
+        builder: (BuildContext contex, BoxConstraints size) {
+          if (size.maxWidth < globals.dimMaxTelefono) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                  itemCount: globals.libri.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Text(globals.libri[index].bookData.titolo),
+                        decoration: BoxDecoration(
+                          color: globals.coloreSfondoContainer,
+                          border: Border.all(
+                              color: globals.coloreBordo,
+                              width: 0.006 * size.maxWidth),
+                          borderRadius:
+                              BorderRadius.circular(0.06 * size.maxWidth),
 
-                  GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(globals.libri.length, (index) {
-                      return Center(
-                        child:Container(
-                          height: 40,
-                          width: 40,
-                          child: Text("pippo"),
-                          color: Colors.amber,
                         ),
-                      );
-                    }),
-                  )
-                ],
+                      ),
+                    );
+                  }),
             );
+          } else {
+            return const Text("pc");
           }
-        else
-          {
-            return Text("pc");
-          }
-      },),
+        },
+      ),
     );
   }
 }
