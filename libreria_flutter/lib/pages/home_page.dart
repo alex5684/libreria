@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -30,13 +29,32 @@ class _HomePageState extends State<HomePage> {
     setProprietarioList("pippo");
     return Scaffold(
       backgroundColor: globals.coloreSfondoScaffold,
-      bottomNavigationBar: GNav(
-        tabs: [
-          GButton(icon: Icons.home,text: "Home",),
-          GButton(icon: Icons.book,text: "I tuo libri",),
-          GButton(icon: Icons.account_box,text: "Account",),
-        ],
-
+      bottomNavigationBar: Container(
+        color: globals.coloreSfondoScaffold,
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        child: GNav(
+          backgroundColor: globals.coloreSfondoScaffold,
+          color: globals.coloreScritteTitoloContainer,
+          activeColor: globals.coloreScritteTitoloContainer,
+          tabBackgroundColor: globals.coloreBordo,
+          padding: EdgeInsets.all(16),
+          gap: 8,
+          onTabChange: (index) {},
+          tabs: [
+            GButton(
+              icon: Icons.home,
+              text: "Home",
+            ),
+            GButton(
+              icon: Icons.book,
+              text: "I tuo libri",
+            ),
+            GButton(
+              icon: Icons.account_box,
+              text: "Account",
+            ),
+          ],
+        ),
       ),
       body: LayoutBuilder(
         builder: (BuildContext contex, BoxConstraints size) {
@@ -59,10 +77,10 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   globals.libri[index].bookData.titolo,
                                   style: TextStyle(
-                                    color: globals.coloreScritteTitoloContainer,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontSize: size.maxWidth*0.04
-                                  ),
+                                      color:
+                                          globals.coloreScritteTitoloContainer,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: size.maxWidth * 0.04),
                                 ),
                               ),
                               Padding(
@@ -70,11 +88,10 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   globals.libri[index].bookData.materia,
                                   style: TextStyle(
-                                    color: globals.coloreScritteMateriaContainer,
-                                    overflow: TextOverflow.ellipsis,
-
-                                      fontSize: size.maxWidth*0.04
-                                  ),
+                                      color:
+                                          globals.coloreScritteMateriaContainer,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: size.maxWidth * 0.04),
                                 ),
                               ),
                               Padding(
@@ -82,11 +99,10 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   globals.libri[index].bookData.classe,
                                   style: TextStyle(
-                                    color: globals.coloreScritteClasseContainer,
-                                    overflow: TextOverflow.ellipsis,
-
-                                      fontSize: size.maxWidth*0.04
-                                  ),
+                                      color:
+                                          globals.coloreScritteClasseContainer,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: size.maxWidth * 0.04),
                                 ),
                               ),
                               Padding(
@@ -95,9 +111,9 @@ class _HomePageState extends State<HomePage> {
                                   globals.libri[index].bookData.cognome,
                                   style: GoogleFonts.roboto(
                                     textStyle: const TextStyle(
-                                      color: globals.coloreScritteCognomeContainer,
+                                      color:
+                                          globals.coloreScritteCognomeContainer,
                                       overflow: TextOverflow.ellipsis,
-
                                     ),
                                   ),
                                 ),
