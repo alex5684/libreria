@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:libreria_flutter/globalVariables.dart' as globals;
 import 'package:libreria_flutter/services/database_utility.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -17,8 +20,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  getData() async
-  {
+  getData() async {
     await setListaLibri();
   }
 
@@ -28,6 +30,14 @@ class _HomePageState extends State<HomePage> {
     setProprietarioList("pippo");
     return Scaffold(
       backgroundColor: globals.coloreSfondoScaffold,
+      bottomNavigationBar: GNav(
+        tabs: [
+          GButton(icon: Icons.home,text: "Home",),
+          GButton(icon: Icons.book,text: "I tuo libri",),
+          GButton(icon: Icons.account_box,text: "Account",),
+        ],
+
+      ),
       body: LayoutBuilder(
         builder: (BuildContext contex, BoxConstraints size) {
           if (size.maxWidth < globals.dimMaxTelefono) {
@@ -35,12 +45,66 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
                   itemCount: globals.libri.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        child: Text(globals.libri[index].bookData.titolo),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(size.maxWidth * 0.0035),
+                                child: Text(
+                                  globals.libri[index].bookData.titolo,
+                                  style: TextStyle(
+                                    color: globals.coloreScritteTitoloContainer,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: size.maxWidth*0.04
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(size.maxWidth * 0.0035),
+                                child: Text(
+                                  globals.libri[index].bookData.materia,
+                                  style: TextStyle(
+                                    color: globals.coloreScritteMateriaContainer,
+                                    overflow: TextOverflow.ellipsis,
+
+                                      fontSize: size.maxWidth*0.04
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(size.maxWidth * 0.0035),
+                                child: Text(
+                                  globals.libri[index].bookData.classe,
+                                  style: TextStyle(
+                                    color: globals.coloreScritteClasseContainer,
+                                    overflow: TextOverflow.ellipsis,
+
+                                      fontSize: size.maxWidth*0.04
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(size.maxWidth * 0.0035),
+                                child: Text(
+                                  globals.libri[index].bookData.cognome,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: const TextStyle(
+                                      color: globals.coloreScritteCognomeContainer,
+                                      overflow: TextOverflow.ellipsis,
+
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         decoration: BoxDecoration(
                           color: globals.coloreSfondoContainer,
                           border: Border.all(
@@ -48,7 +112,6 @@ class _HomePageState extends State<HomePage> {
                               width: 0.006 * size.maxWidth),
                           borderRadius:
                               BorderRadius.circular(0.06 * size.maxWidth),
-
                         ),
                       ),
                     );
