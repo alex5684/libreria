@@ -9,9 +9,9 @@ import 'book_model.dart';
     globals.libri.forEach((element) {
       if(element!=null)
         {
-          if(element.bookData.proprietario==value)
+          if(element.bookData.cognome==value)
             {
-              globals.proprietarioList.add(element.key);
+              globals.proprietarioList.add(element);
             }
         }
     });
