@@ -76,9 +76,17 @@ class _HomePageState extends State<HomePage> {
                                   return LayoutBuilder(
                                     builder: (BuildContext context, alertSize) {
                                       return SizedBox.shrink(
-                                          //color: globals.coloreSfondoContainer.withOpacity(0.7),
                                         child: Center(child:
-                                            Center(
+                                        Container(
+                                          decoration: BoxDecoration(
+                                          color: globals.coloreSfondoContainer.withOpacity(0.7),
+                                          border: Border.all(
+                                              color: globals.coloreBordo,
+                                              width: 0.006 * size.maxWidth),
+                                          borderRadius:
+                                          BorderRadius.circular(0.06 * size.maxWidth),
+                                        ),
+                                          child: Center(
                                             child: Column(
                                             children: [
                                               Center(
@@ -150,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ],
                                           ), ),
+                                        ),
                                         ),
                                       );
                                     },
