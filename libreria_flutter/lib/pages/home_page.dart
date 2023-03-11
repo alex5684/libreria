@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:libreria_flutter/globalVariables.dart' as globals;
-import 'package:libreria_flutter/services/database_utility.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,13 +22,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: globals.coloreSfondoScaffold,
       bottomNavigationBar: Container(
         color: globals.coloreSfondoScaffold,
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
         child: GNav(
+          duration: const Duration(milliseconds: 300),
           backgroundColor: globals.coloreSfondoScaffold,
           color: globals.coloreScritteTitoloContainer,
           activeColor: globals.coloreScritteTitoloContainer,
           tabBackgroundColor: globals.coloreBordo,
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           gap: 8,
           onTabChange: (index) {
             setState(() {
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
               globals.libri.length;
             });
           },
-          tabs: [
+          tabs: const [
             GButton(
               icon: Icons.home,
               text: "Home",
@@ -62,18 +63,202 @@ class _HomePageState extends State<HomePage> {
                   child: GridView.builder(
                       itemCount: globals.libri.length,
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LayoutBuilder(
+                                    builder: (BuildContext context, alertSize) {
+                                      return SizedBox.shrink(
+                                          //color: globals.coloreSfondoContainer.withOpacity(0.7),
+                                        child: Center(child:
+                                            Center(
+                                            child: Column(
+                                            children: [
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.nome,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.cognome,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.email,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.telefono,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.classe,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.materia,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.titolo,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.proprietario,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.condizioni,
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.prezzo.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                              Center(
+                                                child: Text(globals.libri[index]
+                                                    .bookData.disponibile
+                                                    .toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white),),
+                                              ),
+                                            ],
+                                          ), ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(0.06 *
+                                size.maxWidth),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                color: globals.coloreSfondoContainer,
+                                border: Border.all(
+                                    color: globals.coloreBordo,
+                                    width: 0.006 * size.maxWidth),
+                                borderRadius:
+                                BorderRadius.circular(0.06 * size.maxWidth),
+                              ),
+                              child: Container(
+                                color: Colors.transparent,
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        child: Text(
+                                          globals.libri[index].bookData.titolo,
+                                          style: TextStyle(
+                                              color: globals
+                                                  .coloreScritteTitoloContainer,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: size.maxWidth * 0.04),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        child: Text(
+                                          globals.libri[index].bookData.materia,
+                                          style: TextStyle(
+                                              color: globals
+                                                  .coloreScritteMateriaContainer,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: size.maxWidth * 0.04),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        child: Text(
+                                          globals.libri[index].bookData.classe,
+                                          style: TextStyle(
+                                              color: globals
+                                                  .coloreScritteClasseContainer,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: size.maxWidth * 0.04),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        child: Text(
+                                          globals.libri[index].bookData.cognome,
+                                          style: GoogleFonts.roboto(
+                                            textStyle: const TextStyle(
+                                              color: globals
+                                                  .coloreScritteCognomeContainer,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                );
+
+              case 1:
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                      itemCount: globals.proprietarioList.length,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
+                            decoration: BoxDecoration(
+                              color: globals.coloreSfondoContainer,
+                              border: Border.all(
+                                  color: globals.coloreBordo,
+                                  width: 0.006 * size.maxWidth),
+                              borderRadius:
+                              BorderRadius.circular(0.06 * size.maxWidth),
+                            ),
                             child: Center(
                               child: Column(
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                    EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
                                       globals.libri[index].bookData.titolo,
                                       style: TextStyle(
@@ -85,9 +270,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                    EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
-                                      globals.libri[index].bookData.materia,
+                                      globals.proprietarioList[index].bookData
+                                          .materia,
                                       style: TextStyle(
                                           color: globals
                                               .coloreScritteMateriaContainer,
@@ -97,9 +283,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                    EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
-                                      globals.libri[index].bookData.classe,
+                                      globals.proprietarioList[index].bookData
+                                          .classe,
                                       style: TextStyle(
                                           color: globals
                                               .coloreScritteClasseContainer,
@@ -109,9 +296,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                    EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
-                                      globals.libri[index].bookData.cognome,
+                                      globals.proprietarioList[index].bookData
+                                          .cognome,
                                       style: GoogleFonts.roboto(
                                         textStyle: const TextStyle(
                                           color: globals
@@ -124,109 +312,39 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            decoration: BoxDecoration(
-                              color: globals.coloreSfondoContainer,
-                              border: Border.all(
-                                  color: globals.coloreBordo,
-                                  width: 0.006 * size.maxWidth),
-                              borderRadius:
-                                  BorderRadius.circular(0.06 * size.maxWidth),
-                            ),
                           ),
                         );
                       }),
                 );
-                break;
-
-              case 1: return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                    itemCount: globals.proprietarioList.length,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                  EdgeInsets.all(size.maxWidth * 0.0035),
-                                  child: Text(
-                                    globals.libri[index].bookData.titolo,
-                                    style: TextStyle(
-                                        color: globals
-                                            .coloreScritteTitoloContainer,
-                                        overflow: TextOverflow.ellipsis,
-                                        fontSize: size.maxWidth * 0.04),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                  EdgeInsets.all(size.maxWidth * 0.0035),
-                                  child: Text(
-                                    globals.proprietarioList[index].bookData.materia,
-                                    style: TextStyle(
-                                        color: globals
-                                            .coloreScritteMateriaContainer,
-                                        overflow: TextOverflow.ellipsis,
-                                        fontSize: size.maxWidth * 0.04),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                  EdgeInsets.all(size.maxWidth * 0.0035),
-                                  child: Text(
-                                    globals.proprietarioList[index].bookData.classe,
-                                    style: TextStyle(
-                                        color: globals
-                                            .coloreScritteClasseContainer,
-                                        overflow: TextOverflow.ellipsis,
-                                        fontSize: size.maxWidth * 0.04),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                  EdgeInsets.all(size.maxWidth * 0.0035),
-                                  child: Text(
-                                    globals.proprietarioList[index].bookData.cognome,
-                                    style: GoogleFonts.roboto(
-                                      textStyle: const TextStyle(
-                                        color: globals
-                                            .coloreScritteCognomeContainer,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            color: globals.coloreSfondoContainer,
-                            border: Border.all(
-                                color: globals.coloreBordo,
-                                width: 0.006 * size.maxWidth),
-                            borderRadius:
-                            BorderRadius.circular(0.06 * size.maxWidth),
-                          ),
-                        ),
-                      );
-                    }),
-              );
-              break;
-
-                break;
 
               case 2:
-                return Text("impostazioni");
-                break;
+                return Container(
+                  color: globals.coloreSfondoContainer,
+                  child: SettingsList(
+
+                    sections: [
+                      SettingsSection(
+                        title: const Text('Common'),
+                        tiles: <SettingsTile>[
+                          SettingsTile.navigation(
+                            leading: const Icon(Icons.language),
+                            title: const Text('Language'),
+                            value: const Text('English'),
+                          ),
+                          SettingsTile.switchTile(
+                            onToggle: (value) {},
+                            initialValue: true,
+                            leading: const Icon(Icons.format_paint),
+                            title: const Text('Enable custom theme'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
 
               default:
-                return Text("default");
+                return const Text("default");
             }
           } else {
             return const Text("pc");
