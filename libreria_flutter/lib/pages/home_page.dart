@@ -63,8 +63,8 @@ class _HomePageState extends State<HomePage> {
                   child: GridView.builder(
                       itemCount: globals.libri.length,
                       gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -73,101 +73,123 @@ class _HomePageState extends State<HomePage> {
                               showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return LayoutBuilder(
-                                    builder: (BuildContext context, alertSize) {
-                                      return SizedBox.shrink(
-                                        child: Center(child:
-                                        Container(
-                                          decoration: BoxDecoration(
-                                          color: globals.coloreSfondoContainer.withOpacity(0.7),
-                                          border: Border.all(
-                                              color: globals.coloreBordo,
-                                              width: 0.006 * size.maxWidth),
-                                          borderRadius:
-                                          BorderRadius.circular(0.06 * size.maxWidth),
-                                        ),
-                                          child: Center(
-                                            child: Column(
-                                            children: [
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.nome,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                  return AlertDialog(
+                                    backgroundColor:
+                                        globals.coloreSfondoContainer,
+                                    content: Stack(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                globals
+                                                    .libri[index].bookData.nome,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.cognome,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .cognome,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.email,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .email,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.telefono,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .telefono,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.classe,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .classe,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.materia,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .materia,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.titolo,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .titolo,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.proprietario,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .proprietario,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.condizioni,
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .condizioni,
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.prezzo.toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
-                                              ),
-                                              Center(
-                                                child: Text(globals.libri[index]
-                                                    .bookData.disponibile
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .prezzo
                                                     .toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white),),
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
-                                            ],
-                                          ), ),
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                globals.libri[index].bookData
+                                                    .disponibile
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: size.maxWidth*0.01,
+                                              height: size.maxHeight*0.2,
+                                            ),
+                                            Center(
+                                              child: ElevatedButton(
+                                                onPressed: () {},
+                                                child: const Text('My Button'),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        ),
-                                      );
-                                    },
+                                      ],
+                                    ),
                                   );
                                 },
                               );
                             },
-                            borderRadius: BorderRadius.circular(0.06 *
-                                size.maxWidth),
+                            borderRadius:
+                                BorderRadius.circular(0.06 * size.maxWidth),
                             child: Ink(
                               decoration: BoxDecoration(
                                 color: globals.coloreSfondoContainer,
@@ -175,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                                     color: globals.coloreBordo,
                                     width: 0.006 * size.maxWidth),
                                 borderRadius:
-                                BorderRadius.circular(0.06 * size.maxWidth),
+                                    BorderRadius.circular(0.06 * size.maxWidth),
                               ),
                               child: Container(
                                 color: Colors.transparent,
@@ -183,8 +205,8 @@ class _HomePageState extends State<HomePage> {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        padding: EdgeInsets.all(
+                                            size.maxWidth * 0.0035),
                                         child: Text(
                                           globals.libri[index].bookData.titolo,
                                           style: TextStyle(
@@ -195,8 +217,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        padding: EdgeInsets.all(
+                                            size.maxWidth * 0.0035),
                                         child: Text(
                                           globals.libri[index].bookData.materia,
                                           style: TextStyle(
@@ -207,8 +229,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        padding: EdgeInsets.all(
+                                            size.maxWidth * 0.0035),
                                         child: Text(
                                           globals.libri[index].bookData.classe,
                                           style: TextStyle(
@@ -219,8 +241,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                        EdgeInsets.all(size.maxWidth * 0.0035),
+                                        padding: EdgeInsets.all(
+                                            size.maxWidth * 0.0035),
                                         child: Text(
                                           globals.libri[index].bookData.cognome,
                                           style: GoogleFonts.roboto(
@@ -248,8 +270,8 @@ class _HomePageState extends State<HomePage> {
                   child: GridView.builder(
                       itemCount: globals.proprietarioList.length,
                       gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -260,14 +282,14 @@ class _HomePageState extends State<HomePage> {
                                   color: globals.coloreBordo,
                                   width: 0.006 * size.maxWidth),
                               borderRadius:
-                              BorderRadius.circular(0.06 * size.maxWidth),
+                                  BorderRadius.circular(0.06 * size.maxWidth),
                             ),
                             child: Center(
                               child: Column(
                                 children: [
                                   Padding(
                                     padding:
-                                    EdgeInsets.all(size.maxWidth * 0.0035),
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
                                       globals.libri[index].bookData.titolo,
                                       style: TextStyle(
@@ -279,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                    EdgeInsets.all(size.maxWidth * 0.0035),
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
                                       globals.proprietarioList[index].bookData
                                           .materia,
@@ -292,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                    EdgeInsets.all(size.maxWidth * 0.0035),
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
                                       globals.proprietarioList[index].bookData
                                           .classe,
@@ -305,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                    EdgeInsets.all(size.maxWidth * 0.0035),
+                                        EdgeInsets.all(size.maxWidth * 0.0035),
                                     child: Text(
                                       globals.proprietarioList[index].bookData
                                           .cognome,
@@ -330,7 +352,6 @@ class _HomePageState extends State<HomePage> {
                 return Container(
                   color: globals.coloreSfondoContainer,
                   child: SettingsList(
-
                     sections: [
                       SettingsSection(
                         title: const Text('Common'),
