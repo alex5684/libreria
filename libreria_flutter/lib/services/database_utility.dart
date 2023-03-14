@@ -2,10 +2,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:libreria_flutter/globalVariables.dart' as globals;
 import 'book_model.dart';
 
-  uploadChanges(dynamic index,String nome,String cognome,String email,String telefono,String classe,String materia,String titolo,String proprietario,String condizioni,double prezzo,bool disponibile,) async
+  uploadChanges(String index,String nome,String cognome,String email,String telefono,String classe,String materia,String titolo,String condizioni,double prezzo,bool disponibile,) async
   {
-    print("passato");
-    FirebaseDatabase.instance.ref().child("libri").child(index).set({
+    print("update");
+    FirebaseDatabase.instance.ref().child("libri").child(index).update({
       "classe": classe,
       "cognome": cognome,
       "condizioni": condizioni,
@@ -16,7 +16,7 @@ import 'book_model.dart';
       "prezzo": prezzo,
       "telefono": telefono,
       "titolo": titolo
-    });
+    }).then((value) => { print("update") });
 
   }
 

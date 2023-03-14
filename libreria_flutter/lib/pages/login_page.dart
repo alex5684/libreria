@@ -41,9 +41,8 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       Navigator.pop(context);
-      //await setListaLibri();
-      await setProprietarioList("Manghi");
-      // pop the loading circle
+///////////////////////////////////////      await setProprietarioList("Manghi");
+
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (contex) =>  HomePage(),
