@@ -3,10 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:libreria_flutter/globalVariables.dart' as globals;
+import 'package:libreria_flutter/globalVariables.dart';
 import 'package:libreria_flutter/services/database_utility.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../globalVariables.dart';
+import '../services/book_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,47 +35,66 @@ class _HomePageState extends State<HomePage> {
 
 
   @override
+  void initState(){
+    super.initState();
+
+
+    db.onChildAdded.listen((data) {
+      setState(() {
+        BookData bookData = BookData.fromJson(data.snapshot.value as Map);
+        Book book = Book(key: data.snapshot.key!, bookData: bookData);
+        Globals.libri.add(book);
+      });
+    });
+
+    db.onChildChanged.listen((data) {
+      setState(() {
+        BookData bookData = BookData.fromJson(data.snapshot.value as Map);
+        Book book = Book(key: data.snapshot.key!, bookData: bookData);
+        int index = Globals.libri.indexWhere((element) => element.key == data.snapshot.key);
+        Globals.libri.removeAt(index);
+        Globals.libri.insert(index,book);
+      });
+    });
+
+    db.onChildRemoved.listen((data) {
+      setState(() {
+        int index = Globals.libri.indexWhere((element) => element.key == data.snapshot.key);
+        Globals.libri.removeAt(index);
+      });
+    });
+
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
-    db.onChildChanged.listen((event) {
-      setState(() {
+    Globals.user = FirebaseAuth.instance.currentUser!;
+    Globals.libri.clear();
+    Globals.proprietarioList.clear();
 
-      });
-    });
-    db.onChildAdded.listen((event) {
-      setState(() {
-
-      });
-    });
-    db.onChildRemoved.listen((event) {
-      setState(() {
-
-      });
-    });
-
-    globals.user = FirebaseAuth.instance.currentUser!;
-    libri.clear();
-    proprietarioList.clear();
     return FutureBuilder(
         future: setProprietarioList("Ginetti"), ///////////////////////////////////////////////////////////////////////////////scegliere un identificativo per il rpprietario
         builder: (context,snapshot) {
 
           return Scaffold(
-            backgroundColor: globals.coloreSfondoScaffold,
+            backgroundColor: Globals.coloreSfondoScaffold,
             bottomNavigationBar: Container(
-              color: globals.coloreSfondoScaffold,
+              color: Globals.coloreSfondoScaffold,
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
               child: GNav(
                 duration: const Duration(milliseconds: 300),
-                backgroundColor: globals.coloreSfondoScaffold,
-                color: globals.coloreScritteTitoloContainer,
-                activeColor: globals.coloreScritteTitoloContainer,
-                tabBackgroundColor: globals.coloreBordo,
+                backgroundColor: Globals.coloreSfondoScaffold,
+                color: Globals.coloreScritteTitoloContainer,
+                activeColor: Globals.coloreScritteTitoloContainer,
+                tabBackgroundColor: Globals.coloreBordo,
                 padding: const EdgeInsets.all(16),
                 gap: 8,
                 onTabChange: (index) {
                   setState(() {
                     tabIndex = index;
-                    globals.libri.length;
+                    Globals.libri.length;
                   });
                 },
                 tabs: const [
@@ -95,13 +115,13 @@ class _HomePageState extends State<HomePage> {
             ),
             body: LayoutBuilder(
               builder: (BuildContext contex, BoxConstraints size) {
-                if (size.maxWidth < globals.dimMaxTelefono) {
+                if (size.maxWidth < Globals.dimMaxTelefono) {
                   switch (tabIndex) {
                     case 0:
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GridView.builder(
-                            itemCount: globals.libri.length,
+                            itemCount: Globals.libri.length,
                             gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
@@ -116,16 +136,15 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) {
                                         return AlertDialog(
                                           backgroundColor:
-                                          globals.coloreSfondoContainer,
+                                          Globals.coloreSfondoContainer,
                                           content: Stack(
                                             children: [
                                               Column(
                                                 children: [
                                                   Center(
                                                     child: Text(
-                                                      globals
-                                                          .libri[index].bookData.nome,
-                                                      style: TextStyle(
+                                                      Globals.libri[index].bookData.nome,
+                                                      style: const TextStyle(
                                                           color: Colors.white),
                                                     ),
                                                   ),
@@ -135,9 +154,9 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .cognome,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Colors.white),
                                                     ),
                                                   ),
@@ -147,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .email,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -159,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .telefono,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -171,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .classe,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -183,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .materia,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -195,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .titolo,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -207,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .proprietario,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -219,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .condizioni,
                                                       style: TextStyle(
                                                           color: Colors.white),
@@ -231,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .prezzo
                                                           .toString(),
                                                       style: TextStyle(
@@ -244,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   Center(
                                                     child: Text(
-                                                      globals.libri[index].bookData
+                                                      Globals.libri[index].bookData
                                                           .disponibile
                                                           .toString(),
                                                       style: TextStyle(
@@ -273,9 +292,9 @@ class _HomePageState extends State<HomePage> {
                                   BorderRadius.circular(0.06 * size.maxWidth),
                                   child: Ink(
                                     decoration: BoxDecoration(
-                                      color: globals.coloreSfondoContainer,
+                                      color: Globals.coloreSfondoContainer,
                                       border: Border.all(
-                                          color: globals.coloreBordo,
+                                          color: Globals.coloreBordo,
                                           width: 0.006 * size.maxWidth),
                                       borderRadius:
                                       BorderRadius.circular(0.06 * size.maxWidth),
@@ -289,10 +308,9 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.libri[index].bookData.titolo,
+                                                Globals.libri[index].bookData.titolo,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteTitoloContainer,
+                                                    color: Globals.coloreScritteTitoloContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -301,10 +319,9 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.libri[index].bookData.materia,
+                                                Globals.libri[index].bookData.materia,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteMateriaContainer,
+                                                    color: Globals.coloreScritteMateriaContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -313,10 +330,9 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.libri[index].bookData.classe,
+                                                Globals.libri[index].bookData.classe,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteClasseContainer,
+                                                    color: Globals.coloreScritteClasseContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -325,11 +341,10 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.libri[index].bookData.cognome,
+                                                Globals.libri[index].bookData.cognome,
                                                 style: GoogleFonts.roboto(
-                                                  textStyle: const TextStyle(
-                                                    color: globals
-                                                        .coloreScritteCognomeContainer,
+                                                  textStyle: TextStyle(
+                                                    color: Globals.coloreScritteCognomeContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ),
@@ -349,7 +364,7 @@ class _HomePageState extends State<HomePage> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GridView.builder(
-                            itemCount: globals.proprietarioList.length,
+                            itemCount: Globals.proprietarioList.length,
                             gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
@@ -359,14 +374,14 @@ class _HomePageState extends State<HomePage> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      modifiedValue=globals.proprietarioList[index].key;
+                                      modifiedValue=Globals.proprietarioList[index].key;
                                     });
                                     showDialog(
                                       context: context,
                                       builder: (context) {
                                         return AlertDialog(
                                           backgroundColor:
-                                          globals.coloreSfondoContainer,
+                                          Globals.coloreSfondoContainer,
                                           content: Stack(
                                             children: [
                                               SingleChildScrollView(
@@ -376,8 +391,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerNome =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .nome),
@@ -395,8 +409,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerCognome =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .cognome),
@@ -414,8 +427,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerEmail =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .email),
@@ -433,8 +445,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerTelefono =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .telefono),
@@ -452,8 +463,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerClasse =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .classe),
@@ -471,8 +481,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerMateria =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .materia),
@@ -490,8 +499,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerTitolo =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .titolo),
@@ -510,8 +518,7 @@ class _HomePageState extends State<HomePage> {
                                                         controller:
                                                         _controllerCondizioni =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .condizioni),
@@ -529,8 +536,7 @@ class _HomePageState extends State<HomePage> {
                                                       child: TextField(
                                                         controller: _controllerPrezzo =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .prezzo
@@ -550,8 +556,7 @@ class _HomePageState extends State<HomePage> {
                                                         controller:
                                                         _controllerDisponibile =
                                                             TextEditingController(
-                                                                text: globals
-                                                                    .proprietarioList[
+                                                                text: Globals.proprietarioList[
                                                                 index]
                                                                     .bookData
                                                                     .disponibile
@@ -589,9 +594,9 @@ class _HomePageState extends State<HomePage> {
                                   BorderRadius.circular(0.06 * size.maxWidth),
                                   child: Ink(
                                     decoration: BoxDecoration(
-                                      color: globals.coloreSfondoContainer,
+                                      color: Globals.coloreSfondoContainer,
                                       border: Border.all(
-                                          color: globals.coloreBordo,
+                                          color: Globals.coloreBordo,
                                           width: 0.006 * size.maxWidth),
                                       borderRadius:
                                       BorderRadius.circular(0.06 * size.maxWidth),
@@ -605,11 +610,10 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.proprietarioList[index]
+                                                Globals.proprietarioList[index]
                                                     .bookData.titolo,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteTitoloContainer,
+                                                    color: Globals.coloreScritteTitoloContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -618,11 +622,10 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.proprietarioList[index]
+                                                Globals.proprietarioList[index]
                                                     .bookData.materia,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteMateriaContainer,
+                                                    color: Globals.coloreScritteMateriaContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -631,11 +634,10 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.proprietarioList[index]
+                                                Globals.proprietarioList[index]
                                                     .bookData.classe,
                                                 style: TextStyle(
-                                                    color: globals
-                                                        .coloreScritteClasseContainer,
+                                                    color: Globals.coloreScritteClasseContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                     fontSize: size.maxWidth * 0.04),
                                               ),
@@ -644,12 +646,11 @@ class _HomePageState extends State<HomePage> {
                                               padding: EdgeInsets.all(
                                                   size.maxWidth * 0.0035),
                                               child: Text(
-                                                globals.proprietarioList[index]
+                                                Globals.proprietarioList[index]
                                                     .bookData.cognome,
                                                 style: GoogleFonts.roboto(
-                                                  textStyle: const TextStyle(
-                                                    color: globals
-                                                        .coloreScritteCognomeContainer,
+                                                  textStyle: TextStyle(
+                                                    color: Globals.coloreScritteCognomeContainer,
                                                     overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ),
@@ -667,7 +668,7 @@ class _HomePageState extends State<HomePage> {
 
                     case 2:
                       return Container(
-                        color: globals.coloreSfondoContainer,
+                        color: Globals.coloreSfondoContainer,
                         child: SettingsList(
                           sections: [
                             SettingsSection(

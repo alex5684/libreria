@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:libreria_flutter/globalVariables.dart' as globals;
+import '../globalVariables.dart';
 import 'book_model.dart';
 
   uploadChanges(String index,String nome,String cognome,String email,String telefono,String classe,String materia,String titolo,String condizioni,double prezzo,bool disponibile,) async
@@ -24,10 +25,10 @@ import 'book_model.dart';
   {
     await setListaLibri();
 
-    for (var element in globals.libri) {
+    for (var element in Globals.libri) {
         if(element.bookData.cognome==value)
           {
-            globals.proprietarioList.add(element);
+            Globals.proprietarioList.add(element);
           }
     }
   }
@@ -40,7 +41,7 @@ import 'book_model.dart';
         listaLibri = snapshot.value as Map<dynamic,dynamic>;
         listaLibri.forEach((key, value) {
           BookData bookData = BookData.fromJson(value as Map);
-          globals.libri.add(Book(key: key, bookData: bookData));
+          Globals.libri.add(Book(key: key, bookData: bookData));
         });
       }
     });
