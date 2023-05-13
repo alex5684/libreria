@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InputData(),
+      home: InputData(isOwner: true,),
       debugShowCheckedModeBanner: false,
     );
   }

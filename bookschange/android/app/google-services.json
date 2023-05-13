@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "640790572607",
+    "firebase_url": "https://libreria-galilei-2023-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "libreria-galilei-2023",
+    "storage_bucket": "libreria-galilei-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640790572607:android:b215872925e9fc04ff528a",
+        "android_client_info": {
+          "package_name": "com.itisgalilei.bookschange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640790572607-pp6b91qf0rdvspejvhhk8bfi5h5vdh0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbMG7EMnLVezsNj7NU9NYluVmJyDu666Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640790572607-jjjacb05hhlcril926kqqngdmd302mbi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "640790572607-66n6am85pfd1mth7gb1u27ffof3ub6m8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.itisgalilei.libreriaItis23"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640790572607:android:a7a512a7ff33995aff528a",
+        "android_client_info": {
+          "package_name": "com.itisgalilei.libreria_itis_23"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640790572607-pp6b91qf0rdvspejvhhk8bfi5h5vdh0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbMG7EMnLVezsNj7NU9NYluVmJyDu666Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640790572607-jjjacb05hhlcril926kqqngdmd302mbi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "640790572607-66n6am85pfd1mth7gb1u27ffof3ub6m8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.itisgalilei.libreriaItis23"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

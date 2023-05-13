@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_crud_rtdb/models/book_model.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'main.dart';
@@ -155,8 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          updateBook = false;
-          bookDialog();
+
+          //updateBook = false;
+          //bookDialog();
         },
         child: const Icon(Icons.book),),
     );
@@ -250,6 +252,38 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // This shows a CupertinoModalPopup which hosts a CupertinoAlertDialog.
+  void _showAlertDialog(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Alert'),
+        content: const Text('Proceed with destructive action?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            /// This parameter indicates this action is the default,
+            /// and turns the action's text to bold text.
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('No'),
+          ),
+          CupertinoDialogAction(
+            /// This parameter indicates the action would perform
+            /// a destructive action such as deletion, and turns
+            /// the action's text color to red.
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget bookWidget(Book book) {
     return  Card(
       margin: const EdgeInsets.only(left: 10,top: 5, right: 10),
@@ -280,12 +314,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () =>
-                      dbRef.child("libri").child(book.key).remove().then((value){
-                        int index = libri.indexWhere((element) => element.key == book.key);
-                        libri.removeAt(index);
-                        setState(() {});
-                      })
+                  onPressed: () {
+                    _showAlertDialog(context);
+                    /*
+                    dbRef.child("libri").child(book.key).remove().then((
+                        value) {
+                      int index = libri.indexWhere((element) =>
+                      element.key == book.key);
+                      libri.removeAt(index);
+                      setState(() {});
+                    });*/
+                  }
               )
             ],
           ),
@@ -293,4 +332,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
 }

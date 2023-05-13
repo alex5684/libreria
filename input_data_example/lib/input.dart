@@ -1,12 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
-class InputData extends StatefulWidget {
-  @override
-  InputDataState createState() => InputDataState();
+enum ColorLabel {
+  blue('Blue', Colors.blue),
+  pink('Pink', Colors.pink),
+  green('Green', Colors.green),
+  yellow('Yellow', Colors.yellow),
+  grey('Grey', Colors.grey);
+
+  const ColorLabel(this.label, this.color);
+  final String label;
+  final Color color;
+}
+enum IconLabel {
+  smile('Smile', Icons.sentiment_satisfied_outlined),
+  cloud(
+    'Cloud',
+    Icons.cloud_outlined,
+  ),
+  brush('Brush', Icons.brush_outlined),
+  heart('Heart', Icons.favorite);
+
+  const IconLabel(this.label, this.icon);
+  final String label;
+  final IconData icon;
 }
 enum SingingCharacter { lafayette, jefferson }
 const List<String> listClassi = <String>[
@@ -16,8 +34,20 @@ const List<String> listClassi = <String>[
   '4A',	'4B',	'4C',	'4D',	'4E',	'4F',	'4FA',	'4FI',	'4G',	'4H',
   '5A',	'5B',	'5C',	'5D',	'5E',	'5F'];
 const List<String> listMaterie = <String>['Italiano', 'Storia', 'Francese', 'Inglese', 'Sistemi', 'Informatica'];
+const List<String> listCondizione = <String>['Discreta', 'Buona', 'Ottima'];
+
+class InputData extends StatefulWidget {
+  late bool isOwner;
+  InputData({required this.isOwner});
+
+  @override
+  InputDataState createState() => InputDataState(isOwner: isOwner);
+}
 
 class InputDataState extends State<InputData> {
+  bool isOwner;
+  InputDataState({required this.isOwner});
+
   TextEditingController userInput = TextEditingController();
   final TextEditingController controllerNome = TextEditingController();
   final TextEditingController controllerCognome = TextEditingController();
@@ -56,6 +86,7 @@ class InputDataState extends State<InputData> {
                 Column(
                   children: [
                     TextFormField(
+                      enabled: isOwner,
                       controller: controllerNome,
                       keyboardType: TextInputType.text,
                       decoration:
@@ -73,6 +104,7 @@ class InputDataState extends State<InputData> {
                     ),
                     const SizedBox(height: 10,),
                     TextFormField(
+                      enabled: isOwner,
                       controller: controllerCognome,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
@@ -89,6 +121,7 @@ class InputDataState extends State<InputData> {
                     ),
                     const SizedBox(height: 10,),
                     TextFormField(
+                      enabled: isOwner,
                       keyboardType: TextInputType.emailAddress,
                       controller: controllerEmail,
                       decoration: const InputDecoration(
@@ -104,29 +137,29 @@ class InputDataState extends State<InputData> {
                       ),
                     ),
                     const SizedBox(height: 10,),
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      controller: controllerTelefono,
-                      decoration: const InputDecoration(
-                        labelText: 'Telefono',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.deepOrange,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
                     Container(
-                      margin: const EdgeInsets.all(0.0),
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-
                       child: Row(
                         children: [
-                          Expanded(child:                     DropdownButtonFormField<String>(
+                          Expanded(child: TextFormField(
+                            enabled: isOwner,
+                            keyboardType: TextInputType.phone,
+                            controller: controllerTelefono,
+                            decoration: const InputDecoration(
+                              labelText: 'Telefono',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepOrange,
+                                  style: BorderStyle.solid,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          ),
+
+                          const SizedBox(width: 10,),
+                          Expanded(child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
                               labelText: 'Classe',
                               border: OutlineInputBorder(
@@ -140,6 +173,7 @@ class InputDataState extends State<InputData> {
                             ),
                             items: listClassi.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
+                                enabled: isOwner,
                                 value: value,
                                 child: Text(value),
                               );
@@ -153,8 +187,14 @@ class InputDataState extends State<InputData> {
                           ),
                           ),
 
-                          const SizedBox(width: 10,),
-                          Expanded(child:                     DropdownButtonFormField<String>(
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    Container(
+                      child: Row(
+                        children: [
+                          Expanded(child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
                               labelText: 'Materia',
                               border: OutlineInputBorder(
@@ -168,6 +208,7 @@ class InputDataState extends State<InputData> {
                             ),
                             items: listMaterie.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
+                                enabled: isOwner,
                                 value: value,
                                 child: Text(value),
                               );
@@ -180,11 +221,40 @@ class InputDataState extends State<InputData> {
                             },
                           ),
                           ),
+                          const SizedBox(width: 10,),
+                          Expanded(child: DropdownButtonFormField<String>(
+                            decoration: const InputDecoration(
+                              labelText: 'Condizione',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepOrange,
+                                  style: BorderStyle.solid,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                            items: listCondizione.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                enabled: isOwner,
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              // This is called when the user selects an item.
+                              setState(() {
+                                controllerCondizione.text = value!;
+                              });
+                            },
+                          ),
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 10,),
                     TextFormField(
+                      enabled: isOwner,
                       keyboardType: TextInputType.text,
                       controller: controllerTitolo,
                       decoration: const InputDecoration(
@@ -200,31 +270,16 @@ class InputDataState extends State<InputData> {
                       ),
                     ),
                     const SizedBox(height: 10,),
-                    TextFormField(
-                      enabled: false,
-                      keyboardType: TextInputType.text,
-                      controller: controllerCondizione,
-                      decoration: const InputDecoration(
-                        labelText: 'Condizione',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.deepOrange,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    Row(
-                      children: [
+                    Container(
+                      child:Row(
+                        children: [
                         Expanded(child:
                         TextFormField(
+                          enabled: isOwner,
                           keyboardType: TextInputType.number,
                           controller: controllerPrezzo,
                           decoration: const InputDecoration(
-                            labelText: 'Prezzo',
+                            labelText: 'Prezzo €',
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.deepOrange,
@@ -238,6 +293,7 @@ class InputDataState extends State<InputData> {
                         ),
                         Expanded(child:
                         CheckboxListTile(
+                          enabled: isOwner,
                           title: Text(messaggio,
                             style: TextStyle(
                               color: status! ? Colors.green : Colors.red,
@@ -255,6 +311,7 @@ class InputDataState extends State<InputData> {
                         ),
                         ),
                       ],
+                      ),
                     ),
                   ],
                 ),
@@ -262,34 +319,16 @@ class InputDataState extends State<InputData> {
             ],
           ),
         ),
+
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          //updateBook = false;
+          //bookDialog();
+        },
+        child: const Icon(Icons.exit_to_app_sharp),),
     );
   }
 }
 
-enum ColorLabel {
-  blue('Blue', Colors.blue),
-  pink('Pink', Colors.pink),
-  green('Green', Colors.green),
-  yellow('Yellow', Colors.yellow),
-  grey('Grey', Colors.grey);
-
-  const ColorLabel(this.label, this.color);
-  final String label;
-  final Color color;
-}
-
-enum IconLabel {
-  smile('Smile', Icons.sentiment_satisfied_outlined),
-  cloud(
-    'Cloud',
-    Icons.cloud_outlined,
-  ),
-  brush('Brush', Icons.brush_outlined),
-  heart('Heart', Icons.favorite);
-
-  const IconLabel(this.label, this.icon);
-  final String label;
-  final IconData icon;
-}
 
