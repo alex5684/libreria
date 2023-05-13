@@ -13,6 +13,10 @@ import 'package:flutter/material.dart';
 
 List<Book> libri = [];
 List<Book> myLibri = [];
+List<String> materie = [];
+List<Config> cfgMaterie = [];
+List<Config> cfgClassi = [];
+List<Config> cfgCondizioni = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
           prezzo: 0.0,
           disponibile: false,
           proprietario: user!.uid));
-  //bool updateBook = false;
 
   late String message;
   late String token;
@@ -44,6 +47,129 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    cfgMaterie.clear();
+    cfgClassi.clear();
+    cfgCondizioni.clear();
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("materie")
+        .onChildAdded
+        .listen((data) {
+      setState(() {
+        cfgMaterie.add( Config(key: data.snapshot.key!, val: data.snapshot.value as String));
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("materie")
+        .onChildChanged
+        .listen((data) {
+      setState(() {
+        Config materia =  Config(key: data.snapshot.key!, val: data.snapshot.value as String);
+
+        int idx = cfgMaterie.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgMaterie.removeAt(idx);
+          cfgMaterie.insert(idx, materia);
+        }
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("materie")
+        .onChildRemoved
+        .listen((data) {
+      setState(() {
+        int idx = cfgMaterie.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgMaterie.removeAt(idx);
+        }
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("classi")
+        .onChildAdded
+        .listen((data) {
+      setState(() {
+        cfgClassi.add( Config(key: data.snapshot.key!, val: data.snapshot.value as String));
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("classi")
+        .onChildChanged
+        .listen((data) {
+      setState(() {
+        Config classe =  Config(key: data.snapshot.key!, val: data.snapshot.value as String);
+
+        int idx = cfgClassi.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgClassi.removeAt(idx);
+          cfgClassi.insert(idx, classe);
+        }
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("classi")
+        .onChildRemoved
+        .listen((data) {
+      setState(() {
+        int idx = cfgClassi.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgClassi.removeAt(idx);
+        }
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("condizioni")
+        .onChildAdded
+        .listen((data) {
+      setState(() {
+        cfgCondizioni.add( Config(key: data.snapshot.key!, val: data.snapshot.value as String));
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("condizioni")
+        .onChildChanged
+        .listen((data) {
+      setState(() {
+        Config condizione =  Config(key: data.snapshot.key!, val: data.snapshot.value as String);
+
+        int idx = cfgClassi.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgCondizioni.removeAt(idx);
+          cfgCondizioni.insert(idx, condizione);
+        }
+      });
+    });
+
+    FirebaseDatabase.instance
+        .ref()
+        .child("condizioni")
+        .onChildRemoved
+        .listen((data) {
+      setState(() {
+        int idx = cfgCondizioni.indexWhere((element) => element.key == data.snapshot.key);
+        if(idx != -1) {
+          cfgCondizioni.removeAt(idx);
+        }
+      });
+    });
+
+
 
     FirebaseDatabase.instance
         .ref()

@@ -8,7 +8,7 @@ import 'home_page.dart';
 
 enum eBookOp { addBook, updateBook, deleteBook, showBook }
 
-const List<String> listClassi = <String>[
+List<String> listClassi = <String>[
   "",
   '1A',
   '1B',
@@ -52,7 +52,7 @@ const List<String> listClassi = <String>[
   '5E',
   '5F'
 ];
-const List<String> listMaterie = <String>[
+List<String> listMaterie = <String>[
   "",
   'Italiano',
   'Storia',
@@ -63,7 +63,7 @@ const List<String> listMaterie = <String>[
   'Geografia',
   'TPV'
 ];
-const List<String> listCondizione = <String>["", 'Discreta', 'Buona', 'Ottima'];
+List<String> listCondizioni = <String>["", 'Discreta', 'Buona', 'Ottima'];
 
 class InputData extends StatefulWidget {
   late Book book;
@@ -100,6 +100,29 @@ class InputDataState extends State<InputData> {
   @override
   void initState() {
     super.initState();
+
+    if(cfgMaterie.length > 0){
+      listMaterie.clear();
+      for(Config c in cfgMaterie){
+        listMaterie.add(c.val);
+      }
+    }
+
+    if(cfgClassi.length > 0){
+      listClassi.clear();
+      for(Config c in cfgClassi){
+        listClassi.add(c.val);
+      }
+    }
+
+    if(cfgCondizioni.length > 0){
+      listCondizioni.clear();
+      for(Config c in cfgCondizioni){
+        listCondizioni.add(c.val);
+      }
+    }
+
+
     if (book.key.isNotEmpty) {
       controllerNome.text = book.bookData.nome;
       controllerCognome.text = book.bookData.cognome;
@@ -113,7 +136,7 @@ class InputDataState extends State<InputData> {
       status = book.bookData.disponibile;
       messaggio = status! ? 'Disponibile' : 'NON\nDisponibile';
     }
-    switch(bookOp){
+    switch (bookOp) {
       case eBookOp.addBook:
         title = "Inserisci un nuovo libro";
         break;
@@ -129,12 +152,9 @@ class InputDataState extends State<InputData> {
       case eBookOp.showBook:
         title = "Visualizza il libro selezionato";
         break;
-
     }
     isOwner = (book.bookData.proprietario == user?.uid);
   }
-
-
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -275,8 +295,8 @@ class InputDataState extends State<InputData> {
                                   ),
                                 ),
                                 value: classe,
-                                items: listClassi.map<DropdownMenuItem<String>>(
-                                    (String value) {
+                                items: listClassi.map<DropdownMenuItem<String>>
+                                  ((String value) {
                                   return DropdownMenuItem<String>(
                                     enabled: isOwner,
                                     value: value,
@@ -315,9 +335,8 @@ class InputDataState extends State<InputData> {
                                   ),
                                 ),
                                 value: materia,
-                                items: listMaterie
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                items: listMaterie.map<DropdownMenuItem<String>>
+                                  ((String value) {
                                   return DropdownMenuItem<String>(
                                     enabled: isOwner,
                                     value: value,
@@ -350,9 +369,8 @@ class InputDataState extends State<InputData> {
                                   ),
                                 ),
                                 value: condizioni,
-                                items: listCondizione
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                items: listCondizioni.map<DropdownMenuItem<String>>
+                                  ((String value) {
                                   return DropdownMenuItem<String>(
                                     enabled: isOwner,
                                     value: value,
@@ -426,9 +444,7 @@ class InputDataState extends State<InputData> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                activeColor:
-                                    status! ? Colors.green : Colors.red,
-                                //value: timeDilation != 1.0,
+                                activeColor: status! ? Colors.green : Colors.red,
                                 onChanged: (bool? value) {
                                   setState(() {
                                     messaggio = value!
@@ -596,41 +612,41 @@ void deleteBookDialog(BuildContext context, Book book) {
   showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('ATTENZIONE'),
-        content: const Text('Vuoi cancellare il libro selezionato?'),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('No'),
-          ),
-          CupertinoDialogAction(
-            isDestructiveAction: true,
-            onPressed: () {
-              FirebaseDatabase.instance
-                  .ref()
-                  .child("libri")
-                  .child(book.key)
-                  .remove()
-                  .then((value) {
-                int index =
-                    libri.indexWhere((element) => element.key == book.key);
-                if (index != -1) {
-                  libri.removeAt(index);
-                }
-                int myIndex =
-                    myLibri.indexWhere((element) => element.key == book.key);
-                if (myIndex != -1) {
-                  myLibri.removeAt(index);
-                }
-                //setState(() {});
-              });
-              Navigator.pop(context);
-            },
-            child: const Text('Si'),
-          ),
-        ]),
+      title: const Text('ATTENZIONE'),
+      content: const Text('Vuoi cancellare il libro selezionato?'),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('No'),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () {
+            FirebaseDatabase.instance
+                .ref()
+                .child("libri")
+                .child(book.key)
+                .remove()
+                .then((value) {
+              int index =
+                  libri.indexWhere((element) => element.key == book.key);
+              if (index != -1) {
+                libri.removeAt(index);
+              }
+              int myIndex =
+                  myLibri.indexWhere((element) => element.key == book.key);
+              if (myIndex != -1) {
+                myLibri.removeAt(index);
+              }
+              //setState(() {});
+            });
+            Navigator.pop(context);
+          },
+          child: const Text('Si'),
+        ),
+      ]),
   );
 }

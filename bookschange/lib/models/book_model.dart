@@ -62,3 +62,51 @@ class BookData{
   };
 }
 
+class Config{
+  late String key;
+  late String val;
+  Config({required this.key, required this.val});
+
+  Config.fromJson(Map<dynamic,dynamic> json){
+    key = json["key"];
+    val = json["val"];
+  }
+
+  Map<String, dynamic> toJson() => {
+    "key" : key,
+    "valore" : val,
+  };
+}
+
+class MaterieConfig{
+  late String key;
+  late String materia;
+  MaterieConfig({required this.key, required this.materia});
+
+  MaterieConfig.fromJson(Map<dynamic,dynamic> json){
+    materia = json["materia"];
+  }
+
+  Map<String, dynamic> toJson() => {
+    "materia" : materia,
+  };
+}
+
+class ClassiConfig{
+  late String key;
+  late String classe;
+
+  ClassiConfig({required this.key, required this.classe});
+
+  ClassiConfig.fromJson(Map<dynamic,dynamic> json){
+    classe = json["classe"];
+  }
+
+  Map<String, dynamic> toJson() => {
+    "classe" : classe,
+  };
+}
+
+
+
+
